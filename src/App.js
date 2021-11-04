@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Contacts from './components/Contacts'
+
+const API_URL = 'https://randomuser.me/api?results=25';
 
 function App() {
+
+const [contacts, setContacts] = useState([])
+
+useEffect(() => {
+  fetch(API_URL)
+    .then((response) => response.json())
+    .then((data) => setContacts(data.results));
+  console.log('i mounted')
+}, [])
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Contacts contacts={contacts}/>
     </div>
   );
 }
